@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     ].join(" ")
 
     const { text } = await generateText({
-      model: "openai/gpt-5-mini",
+      model: "google/gemini-1.5-flash",
       prompt,
     })
 

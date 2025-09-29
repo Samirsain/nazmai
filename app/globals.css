@@ -123,3 +123,31 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .bg-hero-gradient {
+    /* soft purple→pink→blue per brief */
+    background-image: radial-gradient(800px 400px at 0% 0%, oklch(0.98 0.04 300) 0%, transparent 60%),
+      linear-gradient(135deg, oklch(0.99 0 0) 0%, oklch(0.96 0.06 330) 35%, oklch(0.95 0.06 255) 100%);
+  }
+  .dark .bg-hero-gradient {
+    background-image: radial-gradient(800px 400px at 0% 0%, oklch(0.22 0.05 300) 0%, transparent 60%),
+      linear-gradient(135deg, oklch(0.2 0.06 300) 0%, oklch(0.22 0.07 330) 35%, oklch(0.24 0.06 255) 100%);
+  }
+
+  .glass-card {
+    /* subtle glass with theme tokens */
+    background-color: color-mix(in oklab, var(--card) 80%, transparent);
+    border: 1px solid var(--border);
+    backdrop-filter: saturate(140%) blur(10px);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}

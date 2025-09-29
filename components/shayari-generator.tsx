@@ -19,6 +19,7 @@ export function ShayariGenerator() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [result, setResult] = useState<string>("")
+  const [copied, setCopied] = useState(false)
 
   const effectiveMood = useMemo(() => (customMood.trim().length ? customMood.trim() : mood), [mood, customMood])
 
@@ -42,6 +43,16 @@ export function ShayariGenerator() {
       setError(err?.message || "Something went wrong")
     } finally {
       setLoading(false)
+    }
+  }
+
+  async function handleCopy() {
+    try {
+      await navigator.clipboard.writeText(result)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1500)
+    } catch (e) {
+      // optional: could set an error toast
     }
   }
 
@@ -154,21 +165,34 @@ export function ShayariGenerator() {
             )}
           </div>
 
+          {result ? (
+            <div className="mt-3 flex items-center gap-3">
+              <button
+                onClick={handleCopy}
+                className="inline-flex items-center rounded-md border bg-card px-3 py-2 text-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                aria-label="Copy shayari to clipboard"
+              >
+                {copied ? "Copied!" : "Copy"}
+              </button>
+              <span className="text-xs text-muted-foreground">Share anywhere</span>
+            </div>
+          ) : null}
+
           <div className="mt-5 grid grid-cols-3 gap-3">
             <img
-              src="/images/seed-1.jpg"
-              alt="Cumin seeds texture"
-              className="rounded-md aspect-video object-cover ring-1 ring-border transition-all hover:-translate-y-1 hover:shadow-sm"
+              src="/images/poet-hero.jpg"
+              alt="Poet portrait"
+              className="rounded-md aspect-video object-cover ring-1 ring-border ring-offset-1 ring-offset-background transition-transform hover:-translate-y-1 hover:shadow-sm"
             />
             <img
-              src="/images/seed-2.jpg"
-              alt="Fennel seeds texture"
-              className="rounded-md aspect-video object-cover ring-1 ring-border transition-all hover:-translate-y-1 hover:shadow-sm"
+              src="/images/poet-hero.jpg"
+              alt="Poet portrait"
+              className="rounded-md aspect-video object-cover ring-1 ring-border ring-offset-1 ring-offset-background transition-transform hover:-translate-y-1 hover:shadow-sm"
             />
             <img
-              src="/images/seed-3.jpg"
-              alt="Cardamom seeds texture"
-              className="rounded-md aspect-video object-cover ring-1 ring-border transition-all hover:-translate-y-1 hover:shadow-sm"
+              src="/images/poet-hero.jpg"
+              alt="Poet portrait"
+              className="rounded-md aspect-video object-cover ring-1 ring-border ring-offset-1 ring-offset-background transition-transform hover:-translate-y-1 hover:shadow-sm"
             />
           </div>
         </div>
@@ -176,3 +200,5 @@ export function ShayariGenerator() {
     </div>
   )
 }
+
+export default ShayariGenerator

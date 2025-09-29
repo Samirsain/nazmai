@@ -19,7 +19,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
+      <body
+        id="app"
+        className={`font-sans ${GeistSans.variable} ${GeistMono.variable} antialiased min-h-dvh bg-background text-foreground`}
+      >
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
       </body>
