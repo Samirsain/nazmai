@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { ShayariGenerator } from "@/components/shayari-generator"
 import { AuthNav } from "@/components/auth-nav"
-import SocialIcons from "@/components/social-icons"
+import { Linkedin, Github, Instagram } from "lucide-react"
 
 export default function Home() {
   return (
@@ -108,7 +108,35 @@ export default function Home() {
         <div className="mx-auto max-w-6xl px-4 py-8 text-sm text-muted-foreground flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} NazmAI — Created by Samir Sain</p>
           <div className="flex items-center gap-4">
-            <SocialIcons />
+            <div className="flex items-center gap-3" aria-label="Social links">
+              <a
+                href="https://www.linkedin.com/in/samirsain/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Linkedin className="h-5 w-5" />
+              </a>
+              <a
+                href="https://github.com/Samirsain"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Github className="h-5 w-5" />
+              </a>
+              <a
+                href="https://www.instagram.com/samir_sain0001/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Instagram className="h-5 w-5" />
+              </a>
+            </div>
             <a
               href="#top"
               className="underline-offset-4 hover:underline hover:text-foreground"

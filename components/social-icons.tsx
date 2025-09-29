@@ -11,7 +11,7 @@ type SocialItem = {
 
 const DEFAULT_LINKS: SocialItem[] = [
   { name: "Twitter", href: "https://x.com/", Icon: Twitter },
-  { name: "Instagram", href: "https://instagram.com/", Icon: Instagram },
+  { name: "Instagram", href: "https://www.instagram.com/samir_sain0001?", Icon: Instagram },
   { name: "YouTube", href: "https://youtube.com/", Icon: Youtube },
   { name: "Facebook", href: "https://facebook.com/", Icon: Facebook },
   { name: "GitHub", href: "https://github.com/", Icon: Github },

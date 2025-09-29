@@ -29,18 +29,9 @@ export function ShayariGenerator() {
     setError(null)
     setResult("")
     try {
-      const res = await fetch("/api/shayari", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ mood: effectiveMood, lang, style }),
-      })
-      if (!res.ok) {
-        throw new Error("Failed to generate shayari")
-      }
-      const data: ApiResponse = await res.json()
-      setResult(data.text)
+      throw new Error("API integration is removed. Please integrate your own API to enable generation.")
     } catch (err: any) {
-      setError(err?.message || "Something went wrong")
+      setError(err?.message || "API disabled")
     } finally {
       setLoading(false)
     }
