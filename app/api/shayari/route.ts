@@ -10,7 +10,9 @@ export async function POST(req: NextRequest) {
         ? "Write in Hindi (Devanagari)."
         : lang === "urdu"
           ? "Write in Urdu Nastaliq."
-          : "Write in Roman Hindi (Hinglish)."
+          : lang === "english"
+            ? "Write in English."
+            : "Write in Roman Hindi (Hinglish)."
 
     const styleInstruction =
       style === "classic"

@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { ShayariGenerator } from "@/components/shayari-generator"
+import { AuthNav } from "@/components/auth-nav"
 
 export default function Home() {
   return (
@@ -14,14 +15,17 @@ export default function Home() {
               height={40}
               className="rounded-md object-cover"
             />
-            <h1 className="text-balance text-xl font-semibold">NazmAI — Mood-based Shayari</h1>
+            <h1 className="text-balance text-xl font-semibold">Samir — Mood-based Shayari</h1>
           </div>
-          <a
-            href="#try"
-            className="rounded-md bg-primary text-primary-foreground px-4 py-2 text-sm font-medium transition-transform hover:scale-[1.02] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            Try it
-          </a>
+          <div className="flex items-center gap-3">
+            <AuthNav />
+            <a
+              href="#try"
+              className="rounded-md bg-primary text-primary-foreground px-4 py-2 text-sm font-medium transition-transform hover:scale-[1.02] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              Try it
+            </a>
+          </div>
         </div>
       </header>
 
@@ -31,7 +35,7 @@ export default function Home() {
             Express any mood with personalized shayari
           </h2>
           <p className="text-muted-foreground leading-relaxed">
-            Select a mood or type your own. NazmAI crafts elegant couplets you can share anywhere—subtle, soulful, and
+            Select a mood or type your own. Samir crafts elegant couplets you can share anywhere—subtle, soulful, and
             tailored to how you feel.
           </p>
           <ul className="text-sm text-muted-foreground grid gap-2">
@@ -85,7 +89,7 @@ export default function Home() {
 
       <footer className="border-t">
         <div className="mx-auto max-w-6xl px-4 py-8 text-sm text-muted-foreground flex items-center justify-between">
-          <p>© {new Date().getFullYear()} NazmAI</p>
+          <p>© {new Date().getFullYear()} Samir</p>
           <a href="#top" className="underline-offset-4 hover:underline hover:text-foreground" aria-label="Back to top">
             Back to top
           </a>

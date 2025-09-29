@@ -7,8 +7,8 @@ import { Suspense } from "react"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "v0 App",
-  description: "Created with v0",
+  title: "Samir — Mood-based Shayari",
+  description: "Generate shayari by mood in Hindi, Urdu, English, and Hinglish.",
   generator: "v0.app",
 }
 

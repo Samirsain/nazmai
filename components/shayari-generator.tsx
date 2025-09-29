@@ -14,7 +14,7 @@ const PRESETS = ["Romantic", "Sad", "Happy", "Nostalgic", "Motivational", "Mysti
 export function ShayariGenerator() {
   const [mood, setMood] = useState<string>("Romantic")
   const [customMood, setCustomMood] = useState<string>("")
-  const [lang, setLang] = useState<"hindi" | "urdu" | "roman">("hindi")
+  const [lang, setLang] = useState<"hindi" | "urdu" | "english" | "hinglish">("hindi")
   const [style, setStyle] = useState<"soft" | "classic" | "modern">("soft")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -90,7 +90,8 @@ export function ShayariGenerator() {
               >
                 <option value="hindi">Hindi (देवनागरी)</option>
                 <option value="urdu">Urdu (نستعلیق)</option>
-                <option value="roman">Roman (Hinglish)</option>
+                <option value="english">English</option>
+                <option value="hinglish">Hinglish (Roman)</option>
               </select>
             </div>
 
