@@ -4,14 +4,61 @@ import type React from "react"
 
 import { useMemo, useState } from "react"
 import { MoodChip } from "./mood-chip"
+import { useUser } from "@/contexts/user-context"
+import { Sparkles } from "lucide-react"
 
 type ApiResponse = {
   text: string
+  error?: string
 }
 
-const PRESETS = ["Romantic", "Sad", "Happy", "Nostalgic", "Motivational", "Mystic"]
+// All moods available for everyone!
+const PRESETS = [
+  "Romantic", 
+  "Sad", 
+  "Happy", 
+  "Nostalgic", 
+  "Motivational", 
+  "Mystic",
+  "Philosophical", 
+  "Spiritual", 
+  "Revolutionary", 
+  "Sufi", 
+  "Nature", 
+  "Existential"
+]
+
+// Beautiful themes for everyone
+const THEMES = {
+  sunset: {
+    name: "Sunset Dreams",
+    gradient: "from-orange-400 via-pink-500 to-purple-600",
+    textColor: "text-white",
+  },
+  ocean: {
+    name: "Ocean Depths",
+    gradient: "from-blue-400 via-cyan-500 to-teal-600",
+    textColor: "text-white",
+  },
+  forest: {
+    name: "Forest Whispers",
+    gradient: "from-green-400 via-emerald-500 to-lime-600",
+    textColor: "text-white",
+  },
+  midnight: {
+    name: "Midnight Poetry",
+    gradient: "from-indigo-600 via-purple-700 to-pink-800",
+    textColor: "text-white",
+  },
+  classic: {
+    name: "Classic Elegance",
+    gradient: "from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900",
+    textColor: "text-foreground",
+  },
+}
 
 export function ShayariGenerator() {
+  const { generationCount, incrementGenerations } = useUser()
   const [mood, setMood] = useState<string>("Romantic")
   const [customMood, setCustomMood] = useState<string>("")
   const [lang, setLang] = useState<"hindi" | "urdu" | "english" | "hinglish">("hindi")
@@ -20,6 +67,7 @@ export function ShayariGenerator() {
   const [error, setError] = useState<string | null>(null)
   const [result, setResult] = useState<string>("")
   const [copied, setCopied] = useState(false)
+  const [selectedTheme, setSelectedTheme] = useState<keyof typeof THEMES>("classic")
 
   const effectiveMood = useMemo(() => (customMood.trim().length ? customMood.trim() : mood), [mood, customMood])
 
@@ -28,10 +76,30 @@ export function ShayariGenerator() {
     setLoading(true)
     setError(null)
     setResult("")
+
     try {
-      throw new Error("API integration is removed. Please integrate your own API to enable generation.")
+      const response = await fetch("/api/generate-shayari", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          mood: effectiveMood,
+          language: lang,
+          style: style,
+        }),
+      })
+
+      const data: ApiResponse = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to generate shayari")
+      }
+
+      setResult(data.text)
+      incrementGenerations()
     } catch (err: any) {
-      setError(err?.message || "API disabled")
+      setError(err?.message || "Failed to generate shayari. Please try again.")
     } finally {
       setLoading(false)
     }
@@ -47,11 +115,23 @@ export function ShayariGenerator() {
     }
   }
 
+  const currentTheme = THEMES[selectedTheme]
+
   return (
     <div className="grid gap-6 md:grid-cols-5">
       <div className="md:col-span-2">
         <div className="rounded-lg border bg-card p-5">
+          {/* Counter */}
+          <div className="mb-4 p-3 rounded-md bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 flex items-center justify-between">
+            <span className="text-sm font-medium">Total Generated:</span>
+            <span className="text-lg font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+              {generationCount}
+            </span>
+          </div>
+
           <h3 className="text-lg font-semibold mb-3">Choose your mood</h3>
+          
+          {/* All Moods */}
           <div className="flex flex-wrap gap-2">
             {PRESETS.map((m) => (
               <MoodChip
@@ -77,6 +157,34 @@ export function ShayariGenerator() {
               value={customMood}
               onChange={(e) => setCustomMood(e.target.value)}
             />
+          </div>
+
+          {/* Theme Selector */}
+          <div className="mt-4">
+            <label className="text-sm text-muted-foreground mb-2 flex items-center gap-2">
+              <Sparkles className="h-3 w-3 text-primary" />
+              Choose Theme
+            </label>
+            <div className="grid grid-cols-2 gap-2 mt-2">
+              {(Object.keys(THEMES) as Array<keyof typeof THEMES>).map((themeKey) => {
+                const theme = THEMES[themeKey]
+                return (
+                  <button
+                    key={themeKey}
+                    type="button"
+                    onClick={() => setSelectedTheme(themeKey)}
+                    className={`p-2 rounded-md border text-xs transition-all ${
+                      selectedTheme === themeKey
+                        ? "ring-2 ring-primary border-primary"
+                        : "border-border hover:border-primary/50"
+                    }`}
+                  >
+                    <div className={`h-6 rounded bg-gradient-to-r ${theme.gradient} mb-1`} />
+                    <span>{theme.name}</span>
+                  </button>
+                )
+              })}
+            </div>
           </div>
 
           <div className="mt-6 grid gap-3 md:grid-cols-2">
@@ -134,23 +242,32 @@ export function ShayariGenerator() {
         <div className="rounded-lg border bg-card p-5">
           <h3 className="text-lg font-semibold mb-3">Your poem</h3>
           <div
-            className="rounded-md border bg-background/60 p-4 leading-relaxed"
+            className={`rounded-md border p-6 leading-relaxed min-h-[200px] ${
+              result ? `bg-gradient-to-br ${currentTheme.gradient} ${currentTheme.textColor}` : "bg-background/60"
+            }`}
             aria-live="polite"
             aria-busy={loading}
           >
-            {result ? (
+            {loading ? (
+              <div className="flex items-center justify-center h-full">
+                <div className="text-center">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-3" />
+                  <p className="text-sm text-muted-foreground">Crafting your shayari...</p>
+                </div>
+              </div>
+            ) : result ? (
               <div className="grid gap-4">
                 {result
                   .split("\n")
                   .filter((l) => l.trim().length)
                   .map((line, idx) => (
-                    <p key={idx} className="transition-transform hover:translate-x-0.5 hover:text-foreground/90">
+                    <p key={idx} className="text-lg transition-transform hover:translate-x-1">
                       {line}
                     </p>
                   ))}
               </div>
             ) : (
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-muted-foreground flex items-center justify-center h-full">
                 Your generated shayari will appear here. Choose a mood and click Generate.
               </div>
             )}

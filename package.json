@@ -1,7 +1,9 @@
 {
-  "name": "my-v0-project",
-  "version": "0.1.0",
+  "name": "nazmai-shayari-generator",
+  "version": "1.0.0",
   "private": true,
+  "author": "Samir Sain",
+  "description": "AI-powered mood-based shayari generator built with Next.js",
   "scripts": {
     "build": "next build",
     "dev": "next dev",

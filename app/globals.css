@@ -151,3 +151,33 @@ html {
   background: var(--primary);
   color: var(--primary-foreground);
 }
+
+/* Custom animations */
+@keyframes gradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 3s ease infinite;
+}
+
+/* Delay utilities for staggered animations */
+.delay-500 {
+  animation-delay: 500ms;
+}
+
+.delay-1000 {
+  animation-delay: 1000ms;
+}
+
+/* Arabic/Urdu font support */
+.font-arabic {
+  font-family: "Noto Nastaliq Urdu", "Arabic Typesetting", serif;
+  direction: rtl;
+}

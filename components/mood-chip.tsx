@@ -15,8 +15,10 @@ export function MoodChip({ label, selected, onClick }: MoodChipProps) {
       onClick={onClick}
       className={cn(
         "rounded-full border px-3 py-1 text-sm transition-all",
-        "hover:-translate-y-0.5 hover:shadow-sm",
-        selected ? "bg-primary text-primary-foreground border-transparent" : "bg-card text-foreground hover:bg-accent",
+        "hover:-translate-y-0.5 hover:shadow-md",
+        selected 
+          ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white border-transparent shadow-lg" 
+          : "bg-card text-foreground hover:bg-accent border-primary/20",
       )}
       aria-pressed={selected}
     >

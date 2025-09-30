@@ -1,0 +1,44 @@
+===========================================
+  ENVIRONMENT SETUP INSTRUCTIONS
+===========================================
+
+Create a file named ".env.local" in the root directory of your project
+with the following content:
+
+------- Copy everything below this line -------
+
+OPENAI_API_KEY=your_openai_api_key_here
+
+------- Copy everything above this line -------
+
+STEPS TO GET YOUR OPENAI API KEY:
+
+1. Visit: https://platform.openai.com/api-keys
+
+2. Sign up or log in to your OpenAI account
+
+3. Click "Create new secret key"
+
+4. Give it a name (e.g., "NazmAI Development")
+
+5. Copy the generated key
+
+6. Replace "your_openai_api_key_here" with your actual key
+
+7. Save the .env.local file
+
+8. Restart your development server (pnpm dev)
+
+IMPORTANT SECURITY NOTES:
+- NEVER commit .env.local to git
+- NEVER share your API key publicly
+- The .env.local file is already in .gitignore
+
+ALTERNATIVE: Using Groq (Free & Fast)
+If you want to use Groq instead of OpenAI:
+
+1. Get API key from: https://console.groq.com/
+2. Add to .env.local: GROQ_API_KEY=your_groq_key_here
+3. Update the API route (see SETUP_GUIDE.md for details)
+
+===========================================
